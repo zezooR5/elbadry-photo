@@ -1033,23 +1033,17 @@ document.addEventListener('DOMContentLoaded', () => {
         elements.exportPngBtn.disabled = true;
         elements.exportPngBtn.innerHTML = 'جاري توليد البوستر بدقة عالية...';
 
+        // Temporarily freeze animations on export to avoid layout shifts in clone
+        const originalAnimation = elements.posterProductImage.style.animation;
+        elements.posterProductImage.style.animation = 'none';
+
         try {
-            // Render DOM into canvas with scale 4
             const poster = elements.posterElement;
-            const canvas = await html2canvas(poster, {
-                useCORS: true,
-                allowTaint: true,
-                scale: 4, 
+            const dataUrl = await htmlToImage.toPng(poster, {
+                pixelRatio: 4,
                 backgroundColor: null,
-                logging: false,
-                imageTimeout: 0,
-                onclone: (documentClone) => {
-                    // Force display elements that might be animated/changing
-                    const imgClone = documentClone.getElementById('poster-product-image');
-                    if (imgClone) {
-                        imgClone.style.animation = 'none';
-                        imgClone.style.transform = 'none';
-                    }
+                style: {
+                    transform: 'none'
                 }
             });
 
@@ -1057,7 +1051,7 @@ document.addEventListener('DOMContentLoaded', () => {
             const link = document.createElement('a');
             const fileName = (elements.prodTitle.value || 'product').trim().replace(/\s+/g, '_');
             link.download = `${fileName}_poster.png`;
-            link.href = canvas.toDataURL('image/png');
+            link.href = dataUrl;
             link.click();
 
             showStatusMessage('تم تحميل البوستر بنجاح!', 'success');
@@ -1065,6 +1059,8 @@ document.addEventListener('DOMContentLoaded', () => {
             console.error('Export failed:', error);
             showStatusMessage('حدث خطأ أثناء تصدير البوستر. يرجى المحاولة مجدداً.', 'error');
         } finally {
+            // Restore animation
+            elements.posterProductImage.style.animation = originalAnimation;
             elements.exportPngBtn.disabled = false;
             elements.exportPngBtn.innerHTML = exportBtnText;
         }
