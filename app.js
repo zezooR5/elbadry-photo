@@ -1006,7 +1006,7 @@ document.addEventListener('DOMContentLoaded', () => {
     });
 
     elements.togglePrice.addEventListener('change', () => {
-        elements.pPriceContainer.style.display = elements.togglePrice.checked ? 'inline-flex' : 'none';
+        elements.pPriceContainer.style.display = elements.togglePrice.checked ? 'inline-block' : 'none';
     });
 
     elements.productShadowDepth.addEventListener('input', () => {

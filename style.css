@@ -697,7 +697,6 @@ hr {
     border-radius: 30px;
     font-size: 0.75rem;
     font-weight: 800;
-    letter-spacing: 0.5px;
 }
 
 /* Poster Main Layout */
@@ -808,9 +807,7 @@ hr {
 }
 
 .price-container {
-    display: inline-flex;
-    align-items: center;
-    gap: 8px;
+    display: inline-block;
     background: linear-gradient(135deg, #0284c7, #0d9488);
     color: white;
     padding: 8px 18px;
@@ -826,12 +823,17 @@ hr {
 }
 
 .price-label {
+    display: inline-block;
+    vertical-align: middle;
     font-size: 0.8rem;
     font-weight: 600;
     opacity: 0.9;
+    margin-left: 8px;
 }
 
 .price-value {
+    display: inline-block;
+    vertical-align: middle;
     font-size: 1.15rem;
     font-weight: 800;
 }
@@ -847,7 +849,6 @@ hr {
     font-weight: 700;
     color: #475569;
     text-transform: uppercase;
-    letter-spacing: 0.5px;
     border-bottom: 1px solid rgba(0, 0, 0, 0.08);
     padding-bottom: 6px;
     margin-bottom: 6px;
